@@ -1,4 +1,4 @@
-package com.erivando.comprasonline.data
+package com.erivando.comprasonline.domain
 
 class OrderItem(
     val id: Int,

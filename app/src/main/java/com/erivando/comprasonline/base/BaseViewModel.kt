@@ -5,25 +5,31 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 
-abstract class BaseViewModel: ViewModel() {
+abstract class BaseViewModel : ViewModel() {
+
     val isLoading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String?>()
     val successMessage = MutableLiveData<String?>()
 
-    fun setLoading(isLoading:Boolean){
+    fun setLoading(isLoading: Boolean) {
         this.isLoading.value = isLoading
     }
-    fun setError(erroMessage:String?){
-        this.errorMessage.value = erroMessage
-    }
-    fun setSucceMwssage(succeMessage:String?){
-        this.successMessage.value = succeMessage
+
+    fun setError(message: String?) {
+        this.errorMessage.value = message
         setLoading(false)
     }
-    fun clearMessages(clearMessage:String?) {
+
+    fun setSuccess(message: String?) {
+        this.successMessage.value = message
+        setLoading(false)
+    }
+
+    fun clearMessages() {
         this.errorMessage.value = null
         this.successMessage.value = null
     }
+
     fun <T> handleApiCall(apiCall: suspend () -> T, result: MutableLiveData<T>) {
         viewModelScope.launch {
             try {
@@ -37,5 +43,3 @@ abstract class BaseViewModel: ViewModel() {
         }
     }
 }
-
-
